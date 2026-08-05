@@ -1,0 +1,105 @@
+% deepstudy-pdf template
+% Copy this file to output/<slug>.tex and replace both @@PLACEHOLDER@@
+% markers below. Don't use << >> for placeholders: Computer Modern
+% ligates << and >> into « » guillemets when rendered, so they don't
+% survive as literal text (verified — see SKILL.md Gotchas).
+% Each %% TODO comment marks content the generating agent must write —
+% real explanations, real code, real diagrams. Delete the TODO comments
+% once filled in. Compile with compile.sh, never call pdflatex directly
+% (minted needs -shell-escape and a 3-pass build for the TOC/index).
+\documentclass[12pt,a4paper,oneside]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta} % needed for modern arrow tips (Stealth, Latex, ...)
+\usetikzlibrary{shapes.geometric} % needed for trapezium, diamond, etc.
+\usetikzlibrary{positioning} % needed for "right=0.3cm of <node>" syntax
+\usepackage{minted}
+\usepackage{tcolorbox}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{imakeidx}
+
+\makeindex[intoc]
+
+\geometry{margin=2.5cm}
+\setlength{\parskip}{0.8em}
+\setlength{\parindent}{0pt}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!40!black},
+    stringstyle=\color{red!40!black}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\nouppercase{\leftmark}}
+\fancyhead[LO]{\nouppercase{\rightmark}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    urlcolor=blue!60!black,
+    citecolor=blue!60!black,
+}
+
+% book class has no native \subtitle; fold it into \title as a second line
+\title{@@TITULO@@\\[0.4em]\Large @@SUBTITULO@@}
+\author{DeepStudy PDF Generator}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+% CAPÍTULO 1: FUNDAMENTOS TEÓRICOS
+\chapter{Fundamentos e Teoria Essencial}
+%% TODO: explicar os conceitos base do assunto, por que ele existe,
+%% que problema resolve, e um resumo da evolução histórica relevante.
+%% Escreva de verdade — não deixe placeholder de lorem ipsum no PDF final.
+
+% CAPÍTULO 2: ARQUITETURA INTERNA
+\chapter{Por Debaixo dos Panos}
+%% TODO: como o assunto funciona internamente. Use tikz para diagramas
+%% de arquitetura reais (não decorativos) e, se houver código-fonte
+%% relevante (ex.: de um projeto open source), analise trechos reais.
+
+% CAPÍTULO 3: IMPLEMENTAÇÃO PRÁTICA
+\chapter{Implementação e Exemplos}
+%% TODO: múltiplos exemplos de código do básico ao avançado, usando
+%% minted (```\begin{minted}{python}...\end{minted}```) para o
+%% destaque de sintaxe real. Inclua benchmarks/análises de performance
+%% quando fizer sentido para o assunto.
+
+% CAPÍTULO 4: CASOS AVANÇADOS
+\chapter{Tópicos Avançados}
+%% TODO: edge cases, otimizações, debugging e troubleshooting reais —
+%% coisas que só aparecem quando se usa o assunto em produção.
+
+% APÊNDICES
+\appendix
+\chapter{Referências e Leitura Adicional}
+%% TODO: fontes reais (docs oficiais, RFCs, papers, livros) — sem
+%% inventar URLs.
+
+\chapter{Glossário}
+%% TODO: termos técnicos introduzidos nos capítulos anteriores.
+%% Use \index{termo} nas ocorrências ao longo do texto para alimentar
+%% o índice remissivo abaixo.
+
+\printindex
+
+\end{document}
