@@ -21,6 +21,9 @@ const fs = require('fs');
 
 function processarResultado() {
   // TODO: use process.nextTick, setImmediate e setTimeout na ordem certa
+  process.nextTick(() => { console.log('auditoria') })
+  setImmediate(() => { console.log('proximo-passo') })
+  setTimeout(() => { console.log('fallback') }, 0)
 }
 
 fs.readFile(__filename, () => {

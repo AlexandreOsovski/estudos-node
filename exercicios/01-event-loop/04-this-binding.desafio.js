@@ -12,10 +12,13 @@ Rode com: node 04-this-binding.desafio.js
 */
 
 class Contador {
+  valor = 0;
+
   constructor() {
-    this.valor = 0;
+    this.valor;
   }
-  incrementar() {
+
+  incrementar = () => {
     this.valor++;
     console.log('valor atual:', this.valor);
   }

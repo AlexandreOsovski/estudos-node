@@ -15,13 +15,26 @@ comentários ao lado de cada console.log.
 */
 
 function criarLimitadorDeTentativas(maximo) {
-  // TODO
+  let mx = maximo;
+  return {
+    tentar() {
+      if (this.tentativasRestantes()) {
+        mx -= 1;
+        return true;
+      }
+      return false
+    },
+
+    tentativasRestantes() {
+      return mx;
+    }
+  }
 }
 
 const limitador = criarLimitadorDeTentativas(3);
-console.log(limitador.tentar()); // true
-console.log(limitador.tentar()); // true
-console.log(limitador.tentativasRestantes()); // 1
+console.log(limitador.tentar()) // true
+console.log(limitador.tentar()) // true
+console.log(limitador.tentativasRestantes()) ; // 1
 console.log(limitador.tentar()); // true
 console.log(limitador.tentar()); // false (limite atingido)
 console.log(limitador.tentativasRestantes()); // 0

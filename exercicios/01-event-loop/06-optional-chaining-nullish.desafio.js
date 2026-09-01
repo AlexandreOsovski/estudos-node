@@ -14,11 +14,16 @@ Implemente `obterPrecoFinal(pedido)` que:
 Rode com: node 06-optional-chaining-nullish.desafio.js
 */
 
+const produto1 = { valor: 100, pagamento: { desconto: 20 } };
+const produto2 = { valor: 100, pagamento: { desconto: 0 } }
+const produto3 = { valor: 100 };
+
 function obterPrecoFinal(pedido) {
-  // TODO
+  if (pedido == null) return 0;
+  return (pedido?.pagamento?.desconto > 0 ) ? (pedido?.valor - pedido?.pagamento?.desconto) : pedido?.valor;
 }
 
-console.log(obterPrecoFinal({ valor: 100, pagamento: { desconto: 20 } })); // 80
-console.log(obterPrecoFinal({ valor: 100, pagamento: { desconto: 0 } })); // 100
-console.log(obterPrecoFinal({ valor: 100 })); // 100
+console.log(obterPrecoFinal(produto1)); // 80
+console.log(obterPrecoFinal(produto2)); // 100
+console.log(obterPrecoFinal(produto3)); // 100
 console.log(obterPrecoFinal(null)); // 0
