@@ -28,10 +28,10 @@ interface Produto {
 }
 
 // TODO 1
-type AtualizarProduto = unknown;
+type AtualizarProduto = Partial<Produto>;
 
 // TODO 2
-type ProdutoPublico = unknown;
+type ProdutoPublico = Omit<Produto, 'custoInterno'>
 
 // TODO 3
 type ProdutoSemCusto = unknown;
