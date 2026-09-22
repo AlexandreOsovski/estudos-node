@@ -22,11 +22,14 @@ type NivelDeLog = 'debug' | 'info' | 'warn' | 'error';
 
 // TODO: use satisfies Record<NivelDeLog, string>
 const coresPorNivel = {
-  // preencha os 4 níveis
-};
+  debug: '#FFFFF',
+  info: '#00000',
+  warn: '#FFFFF',
+  error: '#FFFFF'
+} satisfies Record<NivelDeLog, string>;
 
 function logColorido(nivel: NivelDeLog, mensagem: string): void {
-  // TODO
+  console.log(`${coresPorNivel[nivel]} => ${nivel} => ${mensagem}`);
 }
 
 logColorido('info', 'Servidor iniciado');

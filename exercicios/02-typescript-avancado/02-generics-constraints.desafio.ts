@@ -19,7 +19,10 @@ Rode com: npx ts-node 02-generics-constraints.desafio.ts
 
 function atualizarCampo<T, K extends keyof T>(obj: T, chave: K, valor: T[K]): T {
   // TODO
-  return obj;
+  return {
+    ...obj,
+    [chave]: valor
+  };
 }
 
 interface ComId {
@@ -39,8 +42,23 @@ class RepositorioOrdenavel<T extends ComId> {
     return this.itens;
   }
   ordenarPor<K extends keyof T>(campo: K): T[] {
-    // TODO
-    return this.itens;
+    const itens = [...this.itens];
+    itens.sort((a, b) => {
+      const valorA = a[campo];
+      const valorB = b[campo];
+
+      if (typeof valorA === 'string' && typeof valorB === 'string') {
+        return valorA.localeCompare(valorB);
+      }
+
+      if (typeof valorA === 'number' && typeof valorB === 'number') {
+          return valorA - valorB;
+
+      }
+      return 0;
+    })
+
+    return itens;
   }
 }
 
@@ -50,10 +68,14 @@ interface Produto extends ComId {
 }
 
 const usuario = { nome: 'Ana', idade: 30 };
+const usuarioComSobrenome = { nome: 'Ana', sobrenome: 'ana', idade: 30 };
+
+
 console.log(atualizarCampo(usuario, 'idade', 31));
-// console.log(atualizarCampo(usuario, 'sobrenome', 'Silva')); // deve dar erro de compilação
+console.log(atualizarCampo(usuarioComSobrenome, 'sobrenome', 'Silva')); // deve dar erro de compilação
+console.log(atualizarCampo(usuarioComSobrenome, 'idade', 22));
 
 const repo = new RepositorioOrdenavel<Produto>();
 repo.adicionar({ id: 1, nome: 'Monitor', preco: 900 });
 repo.adicionar({ id: 2, nome: 'Teclado', preco: 250 });
-console.log(repo.ordenarPor('preco')); // esperado: Teclado (250) antes de Monitor (900)
+console.log(repo.ordenarPor('nome')); // esperado: Teclado (250) antes de Monitor (900)

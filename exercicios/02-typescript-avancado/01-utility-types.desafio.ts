@@ -1,3 +1,5 @@
+
+
 /*
 DESAFIO — Utility Types
 
@@ -31,28 +33,36 @@ interface Produto {
 type AtualizarProduto = Partial<Produto>;
 
 // TODO 2
-type ProdutoPublico = Omit<Produto, 'custoInterno'>
+type ProdutoPublico = Pick<Produto, 'id' | 'nome' | 'preco'>
 
 // TODO 3
-type ProdutoSemCusto = unknown;
+type ProdutoSemCusto = Omit<Produto, 'custoInterno'>;
 
 // TODO 4
-type Categoria = 'eletronico' | 'livro' | 'roupa';
-type EstoquePorCategoria = unknown;
+type Categoria = Record<'eletronico' | 'livro' | 'roupa', number>;
+type EstoquePorCategoria = Categoria;
 
 function criarProduto() {
   return { id: 1, nome: 'Mouse', preco: 50, custoInterno: 20 };
 }
 // TODO 5
-type ProdutoCriado = unknown;
+type ProdutoCriado = ReturnType<typeof criarProduto>;
 
-function registrarVenda(produtoId: number, quantidade: number, cliente: string) {
-  console.log(`Venda registrada: produto ${produtoId}, qtd ${quantidade}, cliente ${cliente}`);
+interface RegistrarVenda {
+  produtoId: number,
+  quantidade: number,
+  cliente: string
+}
+
+function registrarVenda(props: RegistrarVenda) {
+  console.log(`Venda registrada: produto ${props.produtoId}, qtd ${props.quantidade}, cliente ${props.cliente}`);
 }
 // TODO 6
-type ParametrosVenda = unknown;
-function registrarVendaComLog(...args: any[]) {
-  // TODO
+type ParametrosVenda = Parameters<typeof registrarVenda>;
+function registrarVendaComLog(...args: ParametrosVenda) {
+  console.log(`inicio: ${new Date(Date.now())} -> DADOS DE LOG`);
+
+  return registrarVenda(...args);
 }
 
 const patch: AtualizarProduto = { nome: 'Novo nome' } as AtualizarProduto;
@@ -62,7 +72,13 @@ const estoque: EstoquePorCategoria = { eletronico: 10, livro: 5, roupa: 20 } as 
 const criado: ProdutoCriado = criarProduto() as ProdutoCriado;
 
 console.log({ patch, publico, semCusto, estoque, criado });
-registrarVendaComLog(1, 2, 'Ana');
+
+const registraLog: RegistrarVenda = {
+  produtoId: 1,
+  quantidade: 2,
+  cliente: 'Ana'
+}
+registrarVendaComLog(registraLog);
 
 // Depois de implementar os TODOs, remova os `as ...` acima — se os tipos
 // estiverem corretos, as atribuições devem compilar sem eles.

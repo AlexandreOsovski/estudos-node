@@ -23,16 +23,20 @@ interface Produto {
 }
 
 // TODO 1
-type ProdutoOpcional = unknown;
+type ProdutoOpcional = {[Key in keyof Produto]?: Produto[Key] | null};
 
 // TODO 2
 type EventoCarrinho = 'adicionado' | 'removido' | 'finalizado';
-type NomeDeHandler = string; // troque por um template literal type
-type HandlersDoCarrinho = Record<string, () => void>; // troque pelo mapped type correto
+type NomeDeHandler = `on${Capitalize<EventoCarrinho>}`; // troque por um template literal type
+type HandlersDoCarrinho = {
+  [Event in NomeDeHandler]: () => void;
+}; // troque pelo mapped type correto
 
 // TODO 3
 const handlers: HandlersDoCarrinho = {
-  // implemente os 3 handlers aqui
+  onAdicionado: () => console.log('Produto Adicionado'),
+  onRemovido: () => console.log('Produto Removido'),
+  onFinalizado: () => console.log('Produto Finalizado')
 };
 
 const produtoForm: ProdutoOpcional = { nome: 'Mouse', preco: null } as ProdutoOpcional;

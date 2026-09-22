@@ -22,17 +22,49 @@ DESAFIO — Type Guards e Narrowing
 Rode com: npx ts-node 03-type-guards-narrowing.desafio.ts
 */
 
+type cartao = { tipo: 'cartao'; numero: string; parcelas: number };
+type pix = { tipo: 'pix'; chave: string };
+type boleto = { tipo: 'boleto'; linhaDigitavel: string; vencimento: string };
+
 // TODO 1
-type FormaPagamento = unknown;
+type FormaPagamento = cartao | pix | boleto;
 
 // TODO 2
-function calcularTaxa(pagamento: any): number {
-  return 0;
+function calcularTaxa(pagamento: FormaPagamento): number {
+  let taxa: number;
+  switch (pagamento.tipo) {
+    case 'cartao':
+      taxa = 1.5 + 0.5 * pagamento.parcelas;
+    break;
+
+    case 'pix':
+      taxa = 0;
+    break;
+
+    case 'boleto':
+      taxa = 3;
+    break;
+  }
+  return taxa;
 }
 
 // TODO 3
 function tratarErroPagamento(erro: unknown): string {
+  if (erro instanceof ErroPagamentoRecusado) {
+    return 'PAGAMENTO RECUSADO';
+  }
+
+  if (erro instanceof ErroSaldoInsuficiente) {
+    return 'SALDO INSUFICIENTE';
+  }
+
   return 'Erro desconhecido';
+}
+
+class ErroPagamentoRecusado extends Error {
+}
+
+class ErroSaldoInsuficiente extends Error {
 }
 
 console.log(calcularTaxa({ tipo: 'cartao', numero: '4111', parcelas: 3 } as any)); // 3.0
