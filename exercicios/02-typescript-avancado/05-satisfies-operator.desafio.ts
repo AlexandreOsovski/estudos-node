@@ -22,10 +22,10 @@ type NivelDeLog = 'debug' | 'info' | 'warn' | 'error';
 
 // TODO: use satisfies Record<NivelDeLog, string>
 const coresPorNivel = {
-  debug: '#FFFFF',
-  info: '#00000',
-  warn: '#FFFFF',
-  error: '#FFFFF'
+  debug: '#FFFFFF',
+  info: '#000000',
+  warn: '#FFFFFF',
+  error: '#FFFFFF'
 } satisfies Record<NivelDeLog, string>;
 
 function logColorido(nivel: NivelDeLog, mensagem: string): void {

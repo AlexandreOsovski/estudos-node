@@ -16,7 +16,23 @@ Rode com: node 07-debounce-throttle.desafio.js
 */
 
 function throttleComTrailing(fn, limiteMs) {
-  // TODO
+  let podeExecutar = true;
+  let argsPendentes;
+  return function(...args) {
+    if (!podeExecutar) {
+      argsPendentes = args;
+      return;
+    };
+    fn.apply(this, args);
+    podeExecutar = false;
+    setTimeout(() => {
+      if (argsPendentes !== undefined) {
+        fn.apply(this, argsPendentes)
+        argsPendentes = undefined;
+      }
+      podeExecutar = true
+    }, limiteMs);
+  }
 }
 
 const registrar = throttleComTrailing(
@@ -27,4 +43,5 @@ const registrar = throttleComTrailing(
 registrar('a'); // deve executar imediatamente (leading edge)
 setTimeout(() => registrar('b'), 50); // deve ser ignorada, mas vira candidata a trailing
 setTimeout(() => registrar('c'), 100); // deve ser ignorada, substitui 'b' como candidata a trailing
+registrar('c');
 // esperado: 'c' deve executar por volta de 200ms (trailing edge), mesmo sem nova chamada depois
